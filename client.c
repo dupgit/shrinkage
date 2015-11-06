@@ -198,10 +198,11 @@ int main(int argc, char **argv)
             free(comm->readbuffer);
             free(comm->buffer);
             free(error_buf);
+            free(len);
 
             /* Do something before sending an another POST request */
-            usleep(200000);
-        }
+            usleep(200);
+       }
 
     return 0;
 }

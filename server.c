@@ -125,7 +125,7 @@ static int ahc(void *cls, struct MHD_Connection *connection, const char *url, co
                 }
 
             /* Do something with the  datas */
-            usleep(300000);
+            usleep(300);
 
             free(pp->buffer);
             free(pp);
