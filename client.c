@@ -184,6 +184,7 @@ int main(int argc, char **argv)
             free(comm->buffer);
             free(error_buf);
 
+            /* Do something before sending an another POST request */
             usleep(200000);
         }
 
