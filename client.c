@@ -1,10 +1,28 @@
-
+/* -*- Mode: C; tab-width: 4; indent-tabs-mode: t; c-basic-offset: 4 -*- */
+/*
+ *    client.c
+ *
+ *    (C) Copyright 2015 Olivier Delhomme
+ *     e-mail : olivier.delhomme@free.fr
+ *
+ *    "Sauvegarde" is free software: you can redistribute it and/or modify
+ *    it under the terms of the GNU General Public License as published by
+ *    the Free Software Foundation, either version 3 of the License, or
+ *    (at your option) any later version.
+ *
+ *    "Sauvegarde" is distributed in the hope that it will be useful,
+ *    but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *    GNU General Public License for more details.
+ *
+ *    You should have received a copy of the GNU General Public License
+ *    along with this project.  If not, see <http://www.gnu.org/licenses/>
+ */
 
 #include <stdio.h>
 #include <stdlib.h>
 #include <unistd.h>
 #include <errno.h>
-
 #include <signal.h>
 #include <string.h>
 #include <poll.h>
@@ -23,16 +41,14 @@
  */
 typedef struct
 {
-    CURL *ch; /**< Curl easy handle for a connection                */
-    char *buffer;     /**< Buffer to pass things from the callback function */
-    char *readbuffer; /**< Buffer to be read                                */
-    char *conn;       /**< Connexion string that should be http://ip:port   */
-    ulong seq;         /**< sequence number when receiving multiples parts   */
-    ulong pos;          /**< Position in readbuffer                           */
-    size_t length;     /**< length of buffer                                 */
+    CURL *ch;         /**< Curl easy handle for a connection                                                */
+    char *buffer;     /**< Buffer to pass things from the callback function                                 */
+    char *readbuffer; /**< Buffer to be read                                                                */
+    char *conn;       /**< Connexion string that should be http://ip:port                                   */
+    ulong seq;        /**< sequence number when receiving multiples parts (not really used in this example) */
+    ulong pos;        /**< Position in readbuffer                                                           */
+    size_t length;    /**< length of buffer                                                                 */
 } comm_t;
-
-
 
 
 /**
@@ -64,8 +80,6 @@ static size_t write_data(void *buffer, size_t size, size_t nmemb, void *userp)
 
     return (size * nmemb);
 }
-
-
 
 
 /**
@@ -112,6 +126,7 @@ static size_t read_data(char *buffer, size_t size, size_t nitems, void *userp)
 
     return 0;
 }
+
 
 /**
  * Creates a new communication comm_t * structure.

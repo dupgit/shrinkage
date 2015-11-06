@@ -1,4 +1,23 @@
-
+/* -*- Mode: C; tab-width: 4; indent-tabs-mode: t; c-basic-offset: 4 -*- */
+/*
+ *    server.c
+ *
+ *    (C) Copyright 2015 Olivier Delhomme
+ *     e-mail : olivier.delhomme@free.fr
+ *
+ *    "Sauvegarde" is free software: you can redistribute it and/or modify
+ *    it under the terms of the GNU General Public License as published by
+ *    the Free Software Foundation, either version 3 of the License, or
+ *    (at your option) any later version.
+ *
+ *    "Sauvegarde" is distributed in the hope that it will be useful,
+ *    but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *    GNU General Public License for more details.
+ *
+ *    You should have received a copy of the GNU General Public License
+ *    along with this project.  If not, see <http://www.gnu.org/licenses/>
+ */
 #define MHD_PLATFORM_H
 #include <stdio.h>
 #include <stdlib.h>
@@ -12,6 +31,7 @@
 #include <microhttpd.h>
 #include <errno.h>
 
+
 /**
  * @struct upload_t
  * @brief Structure to manage uploads of data in POST command.
@@ -19,7 +39,7 @@
  */
 typedef struct
 {
-    char *buffer;   /**< buffer that will grab all upload_data from MHD_ahc callback       */
+    char *buffer; /**< buffer that will grab all upload_data from MHD_ahc callback       */
     long pos;     /**< position in the buffer (at the end it is the size of that buffer) */
     long number;  /**< number of upload_data buffers received                            */
 } upload_t;
@@ -71,7 +91,6 @@ static int ahc(void *cls, struct MHD_Connection *connection, const char *url, co
         {
             /* Initialzing the structure at first connection       */
             len = get_content_length(connection);
-            /* fprintf(stderr, "len = %ld\n", len); */
             pp = (upload_t *) malloc(sizeof(upload_t));
             pp->pos = 0;
             pp->buffer = malloc(sizeof(char) * (len + 1));
@@ -98,6 +117,7 @@ static int ahc(void *cls, struct MHD_Connection *connection, const char *url, co
             /* reset when done */
             *con_cls = NULL;
             pp->buffer[pp->pos] = '\0';
+
             /* to investigate libmicrohttpd shrinkage */
             if (pp->number != 0)
                 {
@@ -121,7 +141,6 @@ static int ahc(void *cls, struct MHD_Connection *connection, const char *url, co
 }
 
 
-
 int main(int argc, char **argv)
 {
     struct MHD_Daemon *d;
@@ -134,8 +153,8 @@ int main(int argc, char **argv)
             return 1;
         }
 
-  (void) getc(stdin);
-  MHD_stop_daemon(d);
+    (void) getc(stdin);
+    MHD_stop_daemon(d);
 
-  return 0;
+    return 0;
 }
